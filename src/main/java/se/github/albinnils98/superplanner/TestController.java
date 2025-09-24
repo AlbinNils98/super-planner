@@ -1,0 +1,14 @@
+package se.github.albinnils98.superplanner;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ContentController {
+
+  @GetMapping("/")
+  public String index() {
+    return "Api up and running.";
+  }
+}

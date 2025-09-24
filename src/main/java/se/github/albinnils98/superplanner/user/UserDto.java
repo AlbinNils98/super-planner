@@ -1,4 +1,4 @@
 package se.github.albinnils98.superplanner.user;
 
-public record UserDto() {
+public record UserDto(String username) {
 }

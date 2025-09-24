@@ -1,4 +1,4 @@
-package se.github.albinnils98.superplanner.user.entity;
+package se.github.albinnils98.superplanner.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

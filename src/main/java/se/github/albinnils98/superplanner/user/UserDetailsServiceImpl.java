@@ -4,7 +4,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import se.github.albinnils98.superplanner.user.entity.UserEntity;
+
+import java.util.Optional;
+
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -16,12 +18,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   }
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserEntity user = userRepository.findByUsername(username);
-    if (user == null) {
-      System.out.println("User not found");
-      throw new UsernameNotFoundException(username);
+  public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
+    Optional<UserEntity> userOpt = userRepository.findByUsername(identifier);
+
+    if (userOpt.isEmpty()) {
+      userOpt = userRepository.findByEmail(identifier);
     }
+
+    UserEntity user = userOpt.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
     return new UserPrincipal(user);
   }

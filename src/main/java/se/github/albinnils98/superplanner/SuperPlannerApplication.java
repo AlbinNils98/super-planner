@@ -9,5 +9,4 @@ public class SuperPlannerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SuperPlannerApplication.class, args);
 	}
-
 }

@@ -1,0 +1,30 @@
+scalar DateTime
+
+extend type Query {
+    getTodoLists: [TodoListDto!]!
+}
+
+type Mutation {
+    createTodoList(name: String!): TodoListDto!
+    updateTodoList(listId: Int!, name: String): TodoListDto!
+    deleteTodoList(listId: Int!): Boolean!
+    addTodoListItem(listId: Int!, text: String!): TodoListItemDto!
+    updateTodoListItem(itemId: Int!, isCompleted: Boolean): TodoListItemDto!
+    deleteTodoListItem(itemId: Int!): Boolean!
+}
+
+type TodoListDto {
+    id: Int!,
+    name: String!,
+    items: [TodoListItemDto!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type TodoListItemDto {
+    id: Int!,
+    text: String!,
+    completed: Boolean!,
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}

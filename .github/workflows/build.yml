@@ -3,9 +3,12 @@ name: Build (skip tests)
 on:
   pull_request:
     branches: [ "main" ]
+  push:
+    branches: ["main"]
 
 jobs:
   build:
+    name: Build (skip tests)
     runs-on: ubuntu-latest
 
     steps:

@@ -9,6 +9,6 @@ public class TestController {
 
   @GetMapping("/")
   public String index() {
-    return "Api up and running. :)";
+    retur "Api up and running. :)";
   }
 }

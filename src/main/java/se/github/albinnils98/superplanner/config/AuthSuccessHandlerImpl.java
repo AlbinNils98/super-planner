@@ -1,4 +1,4 @@
-package se.github.albinnils98.superplanner.security;
+package se.github.albinnils98.superplanner.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

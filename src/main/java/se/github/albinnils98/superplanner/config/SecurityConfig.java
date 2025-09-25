@@ -1,4 +1,4 @@
-package se.github.albinnils98.superplanner.security;
+package se.github.albinnils98.superplanner.config;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;

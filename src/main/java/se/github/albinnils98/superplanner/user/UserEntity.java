@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import se.github.albinnils98.superplanner.BaseEntity;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity

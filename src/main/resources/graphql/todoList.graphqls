@@ -4,7 +4,7 @@ extend type Query {
     getTodoLists: [TodoListDto!]!
 }
 
-type Mutation {
+extend type Mutation {
     createTodoList(name: String!): TodoListDto!
     updateTodoList(listId: Int!, name: String): TodoListDto!
     deleteTodoList(listId: Int!): Boolean!

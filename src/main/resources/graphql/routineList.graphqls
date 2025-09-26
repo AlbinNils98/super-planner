@@ -1,0 +1,28 @@
+type RoutineListDto {
+    id: Int!,
+    name: String!,
+    completed: Boolean!,
+    items: [RoutineListItemDto!]!,
+    createdAt: DateTime!,
+    updatedAt: DateTime!
+}
+
+type RoutineListItemDto {
+    id: Int!,
+    text: String!,
+    timeOfDay: String!,
+    createdAt: DateTime!,
+    updatedAt: DateTime!
+}
+
+extend type Query {
+    getRoutineLists: [RoutineListDto!]!
+}
+
+extend type Mutation {
+    createRoutineList(name: String!): RoutineListDto!
+    updateRoutineList(listId: Int!, name: String, isCompleted: Boolean): RoutineListDto!
+    deleteRoutineList(listId: Int!): Boolean!
+    addRoutineListItem(listId: Int!, text: String!, timeOfDay: String!): RoutineListItemDto!
+    deleteRoutineListItem(itemId: Int!): Boolean!
+}

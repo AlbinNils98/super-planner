@@ -7,14 +7,13 @@ import lombok.Getter;
 import lombok.Setter;
 import se.github.albinnils98.superplanner.BaseEntity;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Entity
 @Table(name = "todo_list_item", schema = "superplannerdb")
 public class TodoListItem extends BaseEntity {
 
+  @NotNull
   @ManyToOne
   @JoinColumn(name = "todo_list_id", nullable = false)
   private TodoList todoList;

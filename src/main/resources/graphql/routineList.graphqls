@@ -21,7 +21,7 @@ extend type Query {
 
 extend type Mutation {
     createRoutineList(name: String!): RoutineListDto!
-    updateRoutineList(listId: Int!, name: String): RoutineListDto!
+    updateRoutineList(listId: Int!, name: String, isCompleted: Boolean): RoutineListDto!
     deleteRoutineList(listId: Int!): Boolean!
     addRoutineListItem(listId: Int!, text: String!, timeOfDay: String!): RoutineListItemDto!
     deleteRoutineListItem(itemId: Int!): Boolean!

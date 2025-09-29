@@ -95,7 +95,7 @@ public class TodoListService {
     TodoList list = todoListRepository.findById(listId).orElseThrow(() -> new GraphqlException("No list found for id " + listId));
 
   if (!list.getUser().getId().equals(userId)) {
-    throw new GraphqlException("You do not have permission to update this item");
+    throw new GraphqlException("You do not have permission to update this list");
   }
 
     TodoListItem item = new TodoListItem();

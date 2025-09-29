@@ -20,10 +20,10 @@ extend type Query {
 }
 
 extend type Mutation {
-    createCalendar(name: String!): CalendarDto!
-    updateCalendar(name: String): CalendarDto!
+    addCalendar(name: String!): CalendarDto!
+    updateCalendar(calendarId: Int! name: String): CalendarDto!
     deleteCalendar(calendarId: Int!): Boolean!
     addCalendarItem(calendarId: Int!, text: String!, date: Date!): CalendarItemDto!
     updateCalendarItem(itemId: Int!, text: String): CalendarItemDto!
-    deleteCalendarItem(itemId: Int!): CalendarItemDto!
+    deleteCalendarItem(itemId: Int!): Boolean!
 }

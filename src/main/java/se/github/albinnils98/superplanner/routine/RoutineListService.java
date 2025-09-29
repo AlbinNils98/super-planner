@@ -116,6 +116,12 @@ public class RoutineListService {
     }
 
     RoutineListItem item = new RoutineListItem();
+    item.setRoutineList(list);
+
+    if(text.trim().isEmpty()) {
+      throw new GraphqlException("Text has to include at least one character");
+    }
+
     item.setText(text);
 
     DateTimeFormatter hhmmFormatter = DateTimeFormatter
@@ -125,7 +131,6 @@ public class RoutineListService {
     try {
       LocalTime localTime = LocalTime.parse(timeOfDay, hhmmFormatter);
       item.setTimeOfDay(localTime);
-      item.setRoutineList(list);
     } catch (Exception ex) {
       throw new GraphqlException("timeOfDay must be in HH:mm format");
     }

@@ -30,4 +30,6 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build with Maven (skip tests)
+        env:
+          JWT_SECRET: temporarysecret123
         run: mvn clean package -DskipTests

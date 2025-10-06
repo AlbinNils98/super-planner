@@ -1,0 +1,5 @@
+
+extend type Mutation {
+    signIn(username: String!, password: String!): String!
+    signUp(username: String!, email: String!, password: String!): Boolean!
+}

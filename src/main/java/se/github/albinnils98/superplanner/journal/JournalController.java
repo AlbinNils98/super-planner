@@ -3,6 +3,7 @@ package se.github.albinnils98.superplanner.journal;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import se.github.albinnils98.superplanner.journal.dto.JournalDto;
@@ -11,6 +12,7 @@ import se.github.albinnils98.superplanner.user.UserPrincipal;
 
 import java.util.List;
 
+@PreAuthorize("isAuthenticated()")
 @Controller
 public class JournalController {
 

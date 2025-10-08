@@ -22,7 +22,7 @@ const ProtectedLayout = () => {
         backgroundColor: Colors.light.background
       },
       title: '',
-      headerLeft: () => { if (router.canGoBack()) return <HeaderBackButton /> }
+      headerLeft: () => { if (router.canGoBack()) return <HeaderBackButton /> },
     }} />
 }
 

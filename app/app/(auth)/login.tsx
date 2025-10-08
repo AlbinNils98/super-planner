@@ -1,4 +1,4 @@
-import LoginScreen from '@/screens/LoginScreen';
+import LoginScreen from '@/screens/auth/LoginScreen';
 
 const Login = () => <LoginScreen />;
 

@@ -4,7 +4,9 @@ import { useAuth } from '@/context/Auth';
 import { MeQuery } from '@/generated/graphql';
 import { GET_ME_QUERY } from '@/graphql/query/user';
 import { useQuery } from '@apollo/client/react';
-import { Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
+import TodoBox from './components/TodoBox';
+import Box from '@/components/Box';
 
 
 const HomeScreen = () => {
@@ -19,9 +21,14 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaWrapper>
-      <Text>Home Screen</Text>
-      <Text>Welcome, {user?.me?.username}</Text>
-      <Button title="Log out" onPress={handleLogout} />
+      <ScrollView>
+        <Box style={{ height: 200, marginBottom: 60, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ textAlign: 'center' }}>{`Welcome,\n${user?.me?.username}!`}</Text>
+        </Box>
+
+        <TodoBox />
+        <Button title="Log out" onPress={handleLogout} />
+      </ScrollView>
     </SafeAreaWrapper>
   );
 }

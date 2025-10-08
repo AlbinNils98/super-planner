@@ -295,6 +295,11 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = { __typename?: 'Mutation', signUp: boolean };
 
+export type GetTodoListsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTodoListsQuery = { __typename?: 'Query', getTodoLists: Array<{ __typename?: 'TodoListDto', id: number, name: string, createdAt: string, updatedAt: string, items: Array<{ __typename?: 'TodoListItemDto', id: number, text: string, completed: boolean, createdAt: string, updatedAt: string }> }> };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -366,6 +371,55 @@ export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignU
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export const GetTodoListsDocument = gql`
+    query GetTodoLists {
+  getTodoLists {
+    id
+    name
+    items {
+      id
+      text
+      completed
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetTodoListsQuery__
+ *
+ * To run a query within a React component, call `useGetTodoListsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTodoListsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTodoListsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTodoListsQuery(baseOptions?: Apollo.QueryHookOptions<GetTodoListsQuery, GetTodoListsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTodoListsQuery, GetTodoListsQueryVariables>(GetTodoListsDocument, options);
+      }
+export function useGetTodoListsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTodoListsQuery, GetTodoListsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTodoListsQuery, GetTodoListsQueryVariables>(GetTodoListsDocument, options);
+        }
+export function useGetTodoListsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetTodoListsQuery, GetTodoListsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetTodoListsQuery, GetTodoListsQueryVariables>(GetTodoListsDocument, options);
+        }
+export type GetTodoListsQueryHookResult = ReturnType<typeof useGetTodoListsQuery>;
+export type GetTodoListsLazyQueryHookResult = ReturnType<typeof useGetTodoListsLazyQuery>;
+export type GetTodoListsSuspenseQueryHookResult = ReturnType<typeof useGetTodoListsSuspenseQuery>;
+export type GetTodoListsQueryResult = Apollo.QueryResult<GetTodoListsQuery, GetTodoListsQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {

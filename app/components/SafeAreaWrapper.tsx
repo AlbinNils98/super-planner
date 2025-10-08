@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors';
 import { StyleSheet, ViewProps } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -16,7 +17,7 @@ export const SafeAreaWrapper = ({ children, style, ...props }: SafeAreaWrapperPr
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 16,
+    backgroundColor: Colors.light.background,
+    paddingHorizontal: 16,
   },
 });

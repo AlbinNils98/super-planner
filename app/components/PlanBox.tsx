@@ -15,7 +15,9 @@ const PlanBox: React.FC<PlanBoxProps> = ({ title, onAddPress, children }) => {
     <Box>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{title}</Text>
-        <Pressable onPress={onAddPress}>
+        <Pressable onPress={onAddPress} style={({ pressed }) => [
+          { opacity: pressed ? 0.7 : 1 },
+        ]}>
           <Ionicons name="add-circle-outline" size={40} color={Colors.light.primary} />
         </Pressable>
       </View>

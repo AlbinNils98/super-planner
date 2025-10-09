@@ -1,44 +1,108 @@
-import Text from '@/common/Text';
+import { Text, Pressable, StyleSheet } from 'react-native';
+import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import Reanimated, { SharedValue, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { Feather, Entypo } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
-import { Entypo } from '@expo/vector-icons';
-import { Pressable, StyleSheet } from 'react-native';
 
 type PlanBoxItemProps = {
   title: string;
-  onPress?: () => void;
-}
+  onPress: () => void;
+  onDelete?: () => void;
+};
 
-const PlanBoxItem: React.FC<PlanBoxItemProps> = ({ title, onPress }) => {
+function RightAction(
+  progress: SharedValue<number>,
+  drag: SharedValue<number>,
+  onDelete?: () => void
+) {
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: Math.min(drag.value + 80, 0) }],
+  }));
+
   return (
-    <Pressable onPress={onPress} style={styles.container}>
-      <Text style={styles.text}>{title}</Text>
-      <Entypo name="chevron-right" size={32} color={Colors.light.white} />
-
-    </Pressable>
+    <Reanimated.View style={[styles.rightAction, animatedStyle]}>
+      <Pressable onPress={onDelete} style={({ pressed }) => [
+        styles.deleteButton,
+        { backgroundColor: pressed ? '#cc0000' : 'red' },
+      ]}
+      >
+        <Feather name="trash-2" color="white" size={24} />
+      </Pressable>
+    </Reanimated.View>
   );
 }
+
+export const PlanBoxItem: React.FC<PlanBoxItemProps> = ({ title, onPress, onDelete }) => {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const handlePressIn = () => {
+    scale.value = withTiming(0.97, { duration: 100 });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withTiming(1, { duration: 100 });
+  };
+
+  return (
+    <ReanimatedSwipeable
+      friction={2}
+      enableTrackpadTwoFingerGesture
+      rightThreshold={20}
+      renderRightActions={(progress, drag) => RightAction(progress, drag, onDelete)}
+    >
+      <Pressable
+        onPress={onPress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+      >
+        <Reanimated.View style={[styles.container, animatedStyle]}>
+          <Text style={styles.text}>{title}</Text>
+          <Entypo name="chevron-right" size={32} color={Colors.light.white} />
+        </Reanimated.View>
+      </Pressable>
+    </ReanimatedSwipeable>
+  );
+};
+
+export default PlanBoxItem;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.light.primary,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 16,
-    paddingHorizontal: 8,
+    padding: 20,
     borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   text: {
-    color: Colors.light.text.white,
     fontSize: 16,
+    color: Colors.light.white,
     fontWeight: 'bold'
-  }
-});
+  },
+  rightAction: {
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    width: 90,
+    marginVertical: 2,
+    alignItems: 'flex-end',
+    overflow: 'hidden',
+  },
 
-export default PlanBoxItem;
+  deleteButton: {
+    position: 'absolute',
+    right: 0,
+    width: 90,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

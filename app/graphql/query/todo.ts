@@ -5,14 +5,7 @@ export const GET_TODO_LISTS_QUERY = gql`
     getTodoLists {
     id
     name
-    items {
-      id
-      text
-      completed
-      createdAt
-      updatedAt
-    }
-      createdAt
-      updatedAt
+    createdAt
+    updatedAt
   }
     }`;

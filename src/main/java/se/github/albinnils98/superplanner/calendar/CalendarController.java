@@ -6,6 +6,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import se.github.albinnils98.superplanner.calendar.dto.CalendarBasicDto;
 import se.github.albinnils98.superplanner.calendar.dto.CalendarDto;
 import se.github.albinnils98.superplanner.calendar.dto.CalendarItemDto;
 import se.github.albinnils98.superplanner.user.UserPrincipal;
@@ -24,10 +25,18 @@ public class CalendarController {
 
 
   @QueryMapping
-  public List<CalendarDto> getCalendars(
+  public List<CalendarBasicDto> getCalendars(
       @AuthenticationPrincipal UserPrincipal user
   ) {
     return calendarService.getCalendars(user.getId());
+  }
+
+  @QueryMapping
+  public CalendarDto getCalendar(
+      @AuthenticationPrincipal UserPrincipal user,
+      @Argument Integer calendarId
+  ){
+    return calendarService.getCalendar(user.getId(), calendarId);
   }
 
   @MutationMapping

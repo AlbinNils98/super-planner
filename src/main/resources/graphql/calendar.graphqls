@@ -1,22 +1,7 @@
 
-type CalendarDto {
-    id: Int!
-    name: String!
-    items: [CalendarItemDto!]!
-    createdAt: DateTime!
-    updatedAt: DateTime!
-}
-
-type CalendarItemDto {
-    id: Int
-    text: String!
-    date: Date!
-    createdAt: DateTime!
-    updatedAt: DateTime!
-}
-
 extend type Query {
-    getCalendars: [CalendarDto!]!
+    getCalendars: [CalendarBasicDto!]!
+    getCalendar(calendarId: Int!): CalendarDto!
 }
 
 extend type Mutation {
@@ -26,4 +11,27 @@ extend type Mutation {
     addCalendarItem(calendarId: Int!, text: String!, date: Date!): CalendarItemDto!
     updateCalendarItem(itemId: Int!, text: String): CalendarItemDto!
     deleteCalendarItem(itemId: Int!): Boolean!
+}
+
+type CalendarDto {
+    id: Int!
+    name: String!
+    items: [CalendarItemDto!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type CalendarBasicDto {
+    id: Int!
+    name: String!
+    createdAt: DateTime!,
+    updatedAt: DateTime!
+}
+
+type CalendarItemDto {
+    id: Int
+    text: String!
+    date: Date!
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }

@@ -6,6 +6,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import se.github.albinnils98.superplanner.todoList.dto.TodoListBasicDto;
 import se.github.albinnils98.superplanner.todoList.dto.TodoListDto;
 import se.github.albinnils98.superplanner.todoList.dto.TodoListItemDto;
 import se.github.albinnils98.superplanner.todoList.service.TodoListService;
@@ -24,8 +25,16 @@ public class TodoListController {
   }
 
   @QueryMapping
-  public List<TodoListDto> getTodoLists(@AuthenticationPrincipal UserPrincipal user) throws Exception{
+  public List<TodoListBasicDto> getTodoLists(@AuthenticationPrincipal UserPrincipal user) throws Exception{
     return todoListService.getTodoLists(user.getId());
+  }
+
+  @QueryMapping
+  public TodoListDto getTodoList(
+      @AuthenticationPrincipal UserPrincipal user,
+      @Argument Integer listId
+  ){
+    return todoListService.getTodoList(user.getId(), listId);
   }
 
   @MutationMapping

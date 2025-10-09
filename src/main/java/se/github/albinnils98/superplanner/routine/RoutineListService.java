@@ -3,6 +3,7 @@ package se.github.albinnils98.superplanner.routine;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.github.albinnils98.superplanner.exception.GraphqlException;
+import se.github.albinnils98.superplanner.routine.dto.RoutineListBasicDto;
 import se.github.albinnils98.superplanner.routine.dto.RoutineListDto;
 import se.github.albinnils98.superplanner.routine.dto.RoutineListItemDto;
 import se.github.albinnils98.superplanner.routine.entity.RoutineList;
@@ -33,10 +34,21 @@ public class RoutineListService {
     this.userRepository = userRepository;
   }
 
-  public List<RoutineListDto> getRoutineLists(Integer userId) {
+  public List<RoutineListBasicDto> getRoutineLists(Integer userId) {
     return routineListRepository.findByUserId(userId).stream()
-        .map(RoutineListDto::fromEntity)
+        .map(RoutineListBasicDto::fromEntity)
         .toList();
+  }
+
+  public RoutineListDto getRoutineList(Integer userId, Integer listId) {
+    RoutineList list = routineListRepository.findById(listId)
+        .orElseThrow(() -> new GraphqlException("No list found for id " + listId));
+
+    if(!list.getUser().getId().equals(userId)) {
+      throw new GraphqlException("You do not have permission to access this list");
+    }
+
+    return RoutineListDto.fromEntity(list);
   }
 
   @Transactional

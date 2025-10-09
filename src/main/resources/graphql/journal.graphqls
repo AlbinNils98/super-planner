@@ -1,21 +1,7 @@
 
-type JournalDto {
-    id: Int!
-    name: String!
-    entries: [JournalEntryDto!]!
-    createdAt: DateTime!
-    updatedAt: DateTime!
-}
-
-type JournalEntryDto {
-    id: Int!
-    text: String!
-    createdAt: DateTime!
-    updatedAt: DateTime!
-}
-
 extend type Query {
-    getJournals: [JournalDto!]!
+    getJournals: [JournalBasicDto!]!
+    getJournal(journalId: Int!): JournalDto!
 }
 
 extend type Mutation {
@@ -25,4 +11,26 @@ extend type Mutation {
     addJournalEntry(journalId: Int!, text: String!): JournalEntryDto!
     updateJournalEntry(entryId: Int!, text: String): JournalEntryDto!
     deleteJournalEntry(entryId: Int!): Boolean!
+}
+
+type JournalDto {
+    id: Int!
+    name: String!
+    entries: [JournalEntryDto!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type JournalBasicDto {
+    id: Int!
+    name: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type JournalEntryDto {
+    id: Int!
+    text: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }

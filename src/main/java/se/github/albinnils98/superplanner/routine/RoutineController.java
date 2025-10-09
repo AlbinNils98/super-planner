@@ -6,6 +6,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import se.github.albinnils98.superplanner.routine.dto.RoutineListBasicDto;
 import se.github.albinnils98.superplanner.routine.dto.RoutineListDto;
 import se.github.albinnils98.superplanner.routine.dto.RoutineListItemDto;
 import se.github.albinnils98.superplanner.user.UserPrincipal;
@@ -23,10 +24,18 @@ public class RoutineController {
   }
 
   @QueryMapping
-  public List<RoutineListDto> getRoutineLists(
+  public List<RoutineListBasicDto> getRoutineLists(
       @AuthenticationPrincipal UserPrincipal user
       ){
     return routineListService.getRoutineLists(user.getId());
+  }
+
+  @QueryMapping
+  public RoutineListDto getRoutineList(
+      @AuthenticationPrincipal UserPrincipal user,
+      @Argument Integer listId
+  ){
+    return routineListService.getRoutineList(user.getId(), listId);
   }
 
   @MutationMapping

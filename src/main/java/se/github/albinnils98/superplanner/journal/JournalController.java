@@ -6,6 +6,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import se.github.albinnils98.superplanner.journal.dto.JournalBasicDto;
 import se.github.albinnils98.superplanner.journal.dto.JournalDto;
 import se.github.albinnils98.superplanner.journal.dto.JournalEntryDto;
 import se.github.albinnils98.superplanner.user.UserPrincipal;
@@ -22,10 +23,18 @@ public class JournalController {
   }
 
   @QueryMapping
-  public List<JournalDto> getJournals(
+  public List<JournalBasicDto> getJournals(
       @AuthenticationPrincipal UserPrincipal user
   ) {
   return journalService.getJournals(user.getId());
+  }
+
+  @QueryMapping
+  public JournalDto getJournal(
+      @AuthenticationPrincipal UserPrincipal user,
+      @Argument Integer journalId
+  ){
+    return journalService.getJournal(user.getId(), journalId);
   }
 
   @MutationMapping

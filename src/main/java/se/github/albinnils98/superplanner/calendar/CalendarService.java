@@ -2,6 +2,7 @@ package se.github.albinnils98.superplanner.calendar;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.github.albinnils98.superplanner.calendar.dto.CalendarBasicDto;
 import se.github.albinnils98.superplanner.calendar.dto.CalendarDto;
 import se.github.albinnils98.superplanner.calendar.dto.CalendarItemDto;
 import se.github.albinnils98.superplanner.calendar.entity.Calendar;
@@ -28,10 +29,21 @@ public class CalendarService {
     this.userRepository = userRepository;
   }
 
-  public List<CalendarDto> getCalendars(Integer userId) {
+  public List<CalendarBasicDto> getCalendars(Integer userId) {
     return calendarRepository.findByUserId(userId).stream()
-        .map(CalendarDto::fromEntity)
+        .map(CalendarBasicDto::fromEntity)
         .toList();
+  }
+
+  public CalendarDto getCalendar(Integer userId, Integer calendarId) {
+    Calendar calendar = calendarRepository.findById(calendarId)
+        .orElseThrow(() -> new GraphqlException("Calendar not found for id: " + calendarId));
+
+    if(!calendar.getUser().getId().equals(userId)){
+      throw new GraphqlException("You do not have permission to access this calendar");
+    }
+
+    return CalendarDto.fromEntity(calendar);
   }
 
   @Transactional

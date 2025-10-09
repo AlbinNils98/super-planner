@@ -1,6 +1,7 @@
 
 extend type Query {
-    getTodoLists: [TodoListDto!]!
+    getTodoLists: [TodoListBasicDto!]!
+    getTodoList(listId: Int!): TodoListDto!
 }
 
 extend type Mutation {
@@ -10,6 +11,13 @@ extend type Mutation {
     addTodoListItem(listId: Int!, text: String!): TodoListItemDto!
     updateTodoListItem(itemId: Int!, isCompleted: Boolean): TodoListItemDto!
     deleteTodoListItem(itemId: Int!): Boolean!
+}
+
+type TodoListBasicDto {
+    id: Int!
+    name: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 
 type TodoListDto {

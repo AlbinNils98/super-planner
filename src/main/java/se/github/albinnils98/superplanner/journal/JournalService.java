@@ -2,6 +2,7 @@ package se.github.albinnils98.superplanner.journal;
 
 import org.springframework.stereotype.Service;
 import se.github.albinnils98.superplanner.exception.GraphqlException;
+import se.github.albinnils98.superplanner.journal.dto.JournalBasicDto;
 import se.github.albinnils98.superplanner.journal.dto.JournalDto;
 import se.github.albinnils98.superplanner.journal.dto.JournalEntryDto;
 import se.github.albinnils98.superplanner.journal.entity.Journal;
@@ -26,9 +27,20 @@ public class JournalService {
     this.userRepository = userRepository;
   }
 
-  public List<JournalDto> getJournals(Integer userId) {
+  public List<JournalBasicDto> getJournals(Integer userId) {
     return journalRepository.findByUserId(userId).stream()
-        .map(JournalDto::fromEntity).toList();
+        .map(JournalBasicDto::fromEntity).toList();
+  }
+
+  public JournalDto getJournal(Integer userId, Integer listId) {
+    Journal journal = journalRepository.findById(listId)
+        .orElseThrow(() -> new GraphqlException("No list found for id " + listId));
+
+    if(!journal.getUser().getId().equals(userId)) {
+      throw new GraphqlException("You do not have permission to access this journal");
+    }
+
+    return JournalDto.fromEntity(journal);
   }
 
   public JournalDto createJournal(Integer userId, String name) {

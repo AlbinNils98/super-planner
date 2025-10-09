@@ -3,6 +3,7 @@ package se.github.albinnils98.superplanner.todoList.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.github.albinnils98.superplanner.exception.GraphqlException;
+import se.github.albinnils98.superplanner.todoList.dto.TodoListBasicDto;
 import se.github.albinnils98.superplanner.todoList.dto.TodoListDto;
 import se.github.albinnils98.superplanner.todoList.dto.TodoListItemDto;
 import se.github.albinnils98.superplanner.todoList.entity.TodoList;
@@ -27,10 +28,21 @@ public class TodoListService {
     this.userRepository = userRepository;
   }
 
-  public List<TodoListDto> getTodoLists(Integer userId) {
+  public List<TodoListBasicDto> getTodoLists(Integer userId) {
     return todoListRepository.findByUserId(userId).stream()
-        .map(TodoListDto::fromEntity)
+        .map(TodoListBasicDto::fromEntity)
         .toList();
+  }
+
+  public TodoListDto getTodoList(Integer userId, Integer listId) {
+    TodoList list = todoListRepository.findById(listId)
+        .orElseThrow(() -> new GraphqlException("No list found for id " + listId));
+
+    if(!list.getUser().getId().equals(userId)) {
+      throw new GraphqlException("You do not have permission to access this list");
+    }
+
+    return TodoListDto.fromEntity(list);
   }
 
 @Transactional

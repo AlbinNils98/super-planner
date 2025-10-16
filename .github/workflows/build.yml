@@ -7,7 +7,9 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+
+          # --- Spring Boot api build job ---
+  backend:
     name: Build (skip tests)
     runs-on: ubuntu-latest
 
@@ -33,3 +35,36 @@ jobs:
         env:
           JWT_SECRET: temporarysecret123
         run: mvn clean package -DskipTests
+
+          # --- Expo / React Native build job ---
+  app:
+    name: Build Expo App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Expo CLI
+        run: npm install -g expo-cli
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./app
+
+      - name: Build Expo App
+        run: expo prebuild --non-interactive && expo build:android --no-wait
+        working-directory: ./app
+
+      - name: Cache Node modules
+        uses: actions/cache@v4
+        with:
+          path: ./app/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-

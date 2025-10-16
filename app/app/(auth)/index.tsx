@@ -1,4 +1,4 @@
-import WelcomeScreen from '@/screens/WelcomeScreen';
+import WelcomeScreen from '@/screens/auth/WelcomeScreen';
 import React from 'react';
 
 const Welcome = () => <WelcomeScreen />;

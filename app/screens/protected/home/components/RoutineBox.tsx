@@ -20,12 +20,12 @@ const RoutineBox = () => {
     .slice()
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
-  const handleAdd = () => {
-
-  }
-
   const handleSelection = (id: number) => {
     //router.push({ pathname: "/routine/[id]", params: { id: id } })
+  }
+
+  const handleAdd = () => {
+
   }
 
   const handleDelete = (listId: number) => {
@@ -40,7 +40,8 @@ const RoutineBox = () => {
           key={list.id}
           title={list.name}
           onPress={() => handleSelection(list.id)}
-          onDelete={() => handleDelete(list.id)} />
+          onDelete={() => handleDelete(list.id)}
+          style={list.completed && { backgroundColor: 'green' }} />
       ))}
     </PlanBox>
   )

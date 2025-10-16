@@ -1,4 +1,4 @@
-import { Text, Pressable, StyleSheet } from 'react-native';
+import { Text, Pressable, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import Reanimated, { SharedValue, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { Feather, Entypo } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ type PlanBoxItemProps = {
   title: string;
   onPress: () => void;
   onDelete?: () => void;
+  style?: StyleProp<ViewStyle>
 };
 
 function RightAction(
@@ -32,7 +33,7 @@ function RightAction(
   );
 }
 
-export const PlanBoxItem: React.FC<PlanBoxItemProps> = ({ title, onPress, onDelete }) => {
+export const PlanBoxItem: React.FC<PlanBoxItemProps> = ({ title, onPress, onDelete, style }) => {
   const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -59,7 +60,7 @@ export const PlanBoxItem: React.FC<PlanBoxItemProps> = ({ title, onPress, onDele
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
       >
-        <Reanimated.View style={[styles.container, animatedStyle]}>
+        <Reanimated.View style={[styles.container, animatedStyle, style]}>
           <Text style={styles.text}>{title}</Text>
           <Entypo name="chevron-right" size={32} color={Colors.light.white} />
         </Reanimated.View>

@@ -1,9 +1,6 @@
 import { Button } from '@/common/Button';
 import { SafeAreaWrapper } from '@/components/SafeAreaWrapper';
 import { useAuth } from '@/context/Auth';
-import { MeQuery } from '@/generated/graphql';
-import { GET_ME_QUERY } from '@/graphql/query/user';
-import { useQuery } from '@apollo/client/react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import TodoBox from './components/TodoBox';
 import Box from '@/components/Box';
@@ -13,32 +10,29 @@ import JournalBox from './components/JournalBox';
 
 
 const HomeScreen = () => {
-  const { logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-  }
-
-  const { data: user } = useQuery<MeQuery>(GET_ME_QUERY);
+  const { logout, user } = useAuth();
 
   return (
-    <SafeAreaWrapper>
-      <ScrollView>
+    <SafeAreaWrapper style={{ paddingHorizontal: 0 }}>
+      <ScrollView style={styles.scrollView}>
         <Box style={styles.userBox}>
-          <Text style={{ textAlign: 'center' }}>{`Welcome,\n${user?.me?.username}!`}</Text>
+          <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 24 }}>{`Welcome, ${user?.me?.username}!`}</Text>
         </Box>
 
         <TodoBox />
         <CalendarBox />
         <RoutineBox />
         <JournalBox />
-        <Button title="Log out" onPress={handleLogout} />
+        <Button title="Log out" onPress={logout} />
       </ScrollView>
     </SafeAreaWrapper>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    paddingHorizontal: 16
+  },
   userBox: {
     height: 200,
     marginBottom: 60,

@@ -5,10 +5,11 @@ import { DeleteTodoListMutation, DeleteTodoListMutationVariables, GetTodoListsQu
 import { DELETE_TODO_LIST_MUTATION } from '@/graphql/mutation/todo'
 import { GET_TODO_LISTS_QUERY } from '@/graphql/query/todo'
 import { useMutation, useQuery } from '@apollo/client/react'
+import { useRouter } from 'expo-router'
 import Toast from 'react-native-toast-message'
 
 const TodoBox = () => {
-
+  const router = useRouter();
   const { data } = useQuery<GetTodoListsQuery>(GET_TODO_LISTS_QUERY);
 
   const [deleteTodoListMutation] = useMutation<DeleteTodoListMutation, DeleteTodoListMutationVariables>(DELETE_TODO_LIST_MUTATION, {
@@ -21,11 +22,15 @@ const TodoBox = () => {
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   const handleSelection = (id: number) => {
-    //router.push({ pathname: "/todo/[id]", params: { id: id } })
+    router.push({ pathname: '/(protected)/todoList/[id]', params: { id: id } })
   }
 
   const handleAdd = () => {
     // Handle adding todo list
+    router.push({
+      pathname: '/(protected)/createItem/[type]',
+      params: { type: 'todo' }
+    })
   }
 
   const handleDelete = (listId: number) => {

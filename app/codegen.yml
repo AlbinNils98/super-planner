@@ -9,6 +9,7 @@ generates:
       - "typescript-react-apollo"
     config:
       withHooks: true
+      withSuspense: false
       reactApolloVersion: 3
       scalars:
         DateTime: string

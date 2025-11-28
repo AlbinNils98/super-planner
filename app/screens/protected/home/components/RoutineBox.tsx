@@ -5,10 +5,11 @@ import { DeleteRoutineListMutation, DeleteRoutineListMutationVariables, GetRouti
 import { DELETE_ROUTINE_LIST_MUTATION } from '@/graphql/mutation/routine';
 import { GET_ROUTINES_QUERY } from '@/graphql/query/routine';
 import { useMutation, useQuery } from '@apollo/client/react';
+import { useRouter } from 'expo-router';
 import Toast from 'react-native-toast-message';
 
 const RoutineBox = () => {
-
+  const router = useRouter();
   const { data } = useQuery<GetRoutineListsQuery>(GET_ROUTINES_QUERY);
 
   const [deleteRoutineListMutation] = useMutation<DeleteRoutineListMutation, DeleteRoutineListMutationVariables>(DELETE_ROUTINE_LIST_MUTATION, {
@@ -25,7 +26,10 @@ const RoutineBox = () => {
   }
 
   const handleAdd = () => {
-
+    router.push({
+      pathname: '/(protected)/createItem/[type]',
+      params: { type: 'routine' }
+    })
   }
 
   const handleDelete = (listId: number) => {

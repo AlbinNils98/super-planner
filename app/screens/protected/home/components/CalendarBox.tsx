@@ -5,10 +5,11 @@ import { DeleteCalendarMutation, DeleteCalendarMutationVariables, GetCalendarsQu
 import { DELETE_CALENDAR_MUTATION } from '@/graphql/mutation/calendar';
 import { GET_CALENDARS_QUERY } from '@/graphql/query/calendar';
 import { useMutation, useQuery } from '@apollo/client/react';
+import { useRouter } from 'expo-router';
 import Toast from 'react-native-toast-message';
 
 const CalendarBox = () => {
-
+  const router = useRouter();
   const { data } = useQuery<GetCalendarsQuery>(GET_CALENDARS_QUERY);
   const [deleteCalendarMutation] = useMutation<DeleteCalendarMutation, DeleteCalendarMutationVariables>(DELETE_CALENDAR_MUTATION, {
     refetchQueries: [GET_CALENDARS_QUERY],
@@ -24,7 +25,10 @@ const CalendarBox = () => {
   }
 
   const handleAdd = () => {
-    // Handle adding todo list
+    router.push({
+      pathname: '/(protected)/createItem/[type]',
+      params: { type: 'calendar' }
+    })
   }
 
   const handleDelete = (calendarId: number) => {
@@ -32,7 +36,7 @@ const CalendarBox = () => {
   }
 
   return (
-    <PlanBox title="Calendars" onAddPress={() => { }}>
+    <PlanBox title="Calendars" onAddPress={handleAdd}>
       {!data?.getCalendars.length && <Text>No calendars yet</Text>}
       {sortedLists?.map((calendar) => (
         <PlanBoxItem

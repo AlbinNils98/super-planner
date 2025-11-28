@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "users", schema = "superplannerdb")
+@Table(name = "users")
 public class UserEntity extends BaseEntity {
 
   @Size(max = 255)

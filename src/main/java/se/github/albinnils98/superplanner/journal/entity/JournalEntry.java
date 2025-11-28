@@ -10,7 +10,7 @@ import se.github.albinnils98.superplanner.BaseEntity;
 @Getter
 @Setter
 @Entity
-@Table(name = "journal_entry", schema = "superplannerdb")
+@Table(name = "journal_entry")
 public class JournalEntry extends BaseEntity {
 
   @NotNull

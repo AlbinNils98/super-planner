@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "journal", schema = "superplannerdb")
+@Table(name = "journal")
 public class Journal extends BaseEntity {
 
   @NotNull

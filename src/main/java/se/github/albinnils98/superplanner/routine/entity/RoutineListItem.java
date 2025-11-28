@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "routine_list_item", schema = "superplannerdb")
+@Table(name = "routine_list_item")
 public class RoutineListItem extends BaseEntity {
 
   @NotNull

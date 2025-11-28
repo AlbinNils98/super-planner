@@ -10,7 +10,7 @@ import se.github.albinnils98.superplanner.BaseEntity;
 @Getter
 @Setter
 @Entity
-@Table(name = "todo_list_item", schema = "superplannerdb")
+@Table(name = "todo_list_item")
 public class TodoListItem extends BaseEntity {
 
   @NotNull

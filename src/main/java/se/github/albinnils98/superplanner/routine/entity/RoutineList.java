@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "routine_list", schema = "superplannerdb")
+@Table(name = "routine_list")
 public class RoutineList extends BaseEntity {
 
   @NotNull

@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "todo_list", schema = "superplannerdb")
+@Table(name = "todo_list")
 public class TodoList extends BaseEntity {
 
   @Size(max = 255)
